@@ -44,11 +44,12 @@ const RootLayout = () => {
           presentation: "card",
         }}
       />
+
       <Stack.Screen
-        name="(tabs)"
+        name="(drawer)"
         options={{
-          headerTitle: "Tab",
-          headerShown:false
+          headerTitle: "Drawer",
+          headerShown: false,
         }}
       />
     </Stack>
