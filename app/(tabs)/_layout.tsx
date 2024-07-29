@@ -1,37 +1,33 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { View, Text, Button } from "react-native";
+import React from "react";
+import { router, Tabs } from "expo-router";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+const TabLayout = () => {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
+    <Tabs>
       <Tabs.Screen
-        name="index"
+        name="feed"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={24} />
           ),
+          tabBarLabel: "Feed",
+          headerTitle:"Feed",
+          headerRight:()=><Button title="Add Post" onPress={()=>router.push("feed/new")}/>
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="profile"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="account" color={color} size={24} />
           ),
+          tabBarLabel: "Profile",
         }}
       />
     </Tabs>
   );
-}
+};
+
+export default TabLayout;

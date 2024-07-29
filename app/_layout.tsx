@@ -1,37 +1,58 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { router, Stack } from "expo-router";
+import React from "react";
+import { Button } from "react-native";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
+const RootLayout = () => {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#f4511e",
+        },
+        headerTitleStyle: {
+          color: "#fff",
+        },
+        headerTintColor: "white",
+      }}
+    >
+      <Stack.Screen
+        name="index"
+        options={{
+          headerTitle: "Home",
+          headerRight: () => (
+            <Button onPress={() => router.push("/contact")} title="Contact" />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="about"
+        options={{
+          headerTitle: "About",
+        }}
+      />
+      <Stack.Screen
+        name="blog/index"
+        options={{
+          headerTitle: "Blog",
+        }}
+      />
+
+      <Stack.Screen
+        name="contact"
+        options={{
+          headerTitle: "Contact",
+          presentation: "card",
+        }}
+      />
+      <Stack.Screen
+        name="(tabs)"
+        options={{
+          headerTitle: "Tab",
+          headerShown:false
+        }}
+      />
+    </Stack>
   );
-}
+};
+
+export default RootLayout;
